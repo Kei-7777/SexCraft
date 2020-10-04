@@ -1,9 +1,6 @@
 package me.kei.sex.craft;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -18,8 +15,6 @@ public class SexCraft extends JavaPlugin implements Listener {
 
     public static Map<String, Integer> data;
     List<EntityType> entities = Arrays.asList(
-            EntityType.ZOMBIE,
-            EntityType.SKELETON,
             EntityType.BAT,
             EntityType.BEE,
             EntityType.BLAZE,
@@ -32,7 +27,6 @@ public class SexCraft extends JavaPlugin implements Listener {
             EntityType.DONKEY,
             EntityType.DROWNED,
             EntityType.ELDER_GUARDIAN,
-            EntityType.ENDER_DRAGON,
             EntityType.ENDERMAN,
             EntityType.ENDERMITE,
             EntityType.EVOKER,
@@ -51,7 +45,25 @@ public class SexCraft extends JavaPlugin implements Listener {
             EntityType.PHANTOM,
             EntityType.PIG,
             EntityType.PIG_ZOMBIE,
-            EntityType.POLAR_BEAR
+            EntityType.POLAR_BEAR,
+            EntityType.PUFFERFISH,
+            EntityType.RABBIT,
+            EntityType.SHEEP,
+            EntityType.SHULKER,
+            EntityType.SILVERFISH,
+            EntityType.SKELETON,
+            EntityType.SLIME,
+            EntityType.SPIDER,
+            EntityType.SQUID,
+            EntityType.STRAY,
+            EntityType.VILLAGER,
+            EntityType.WITCH,
+            EntityType.WITHER,
+            EntityType.WITHER_SKELETON,
+            EntityType.WOLF,
+            EntityType.ZOMBIE,
+            EntityType.ZOMBIE_HORSE,
+            EntityType.ZOMBIE_VILLAGER
     );
 
     @Override
@@ -82,12 +94,16 @@ public class SexCraft extends JavaPlugin implements Listener {
                         for(Player pl : Bukkit.getOnlinePlayers()){
                             pl.playSound(p.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1f, 1f);
                         }
+
+                        p.getLocation().getWorld().spawnParticle(Particle.HEART, p.getLocation().clone().add(0, 2.5, 0), 3);
+                        p.getLocation().getWorld().spawnParticle(Particle.HEART, target.getLocation().clone().add(0, 2.5, 0), 3);
+
                         if (o >= this.getConfig().getInt(target.getName())) {
                             data.replace(target.getName(), 0);
 
                             Location loc = target.getLocation();
                             Collections.shuffle(entities);
-                            loc.getWorld().spawnEntity(loc, entities.get(0));
+                            loc.getWorld().spawnEntity(loc, entities.get(0)).setCustomName(ChatColor.LIGHT_PURPLE + target.getName() + ChatColor.WHITE + " x " + ChatColor.AQUA + p.getName() + ChatColor.WHITE + " の子供");
                             Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + target.getName() + ChatColor.WHITE + "と" + ChatColor.AQUA + p.getName() + ChatColor.WHITE + "の間に" + ChatColor.GOLD + entities.get(0).name() + ChatColor.WHITE + "が産まれた！");
                             for(Player pl : Bukkit.getOnlinePlayers()){
                                 pl.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1f, 1f);
